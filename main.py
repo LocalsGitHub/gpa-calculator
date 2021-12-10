@@ -10,28 +10,37 @@ class calculator():
         self.class4 = input('Enter English Grade: ')
         self.class5 = input('Enter Science Grade: ')
         self.class6 = input('Enter Social Studies Grade: ')
-
+        
         self.result = self.calculate(self.class1, self.class2, self.class3, self.class4, self.class5, self.class6)
         
         
     def calculate(self, class1, class2, class3, class4, class5, class6):
         newClasses = []
+        newClasse = []
         classes = [class1, class2, class3, class4, class5, class6]
-        for class1 in classes:
+        for i in classes:
+            # Remove minues and pluses from classes variable
+            if '-' in i:
+                newClasse.append(i.strip('-'))
+            elif '+' in i:
+                newClasse.append(i.strip('+'))
+            else:
+                newClasse.append(i)
+        for class1 in newClasse:
             if class1.isdigit():
                 if int(class1) == 100:
                     newClasses.append("A")
-                elif int(class1) < 100:
+                elif int(class1) < 100 and int(class1) >= 90:
                     newClasses.append("A")
-                elif int(class1) < 90:
+                elif int(class1) < 90 and int(class1) >= 80:
                     newClasses.append("A")
-                elif int(class1) < 80:
+                elif int(class1) < 80 and int(class1) >= 70:
                     newClasses.append("B")
-                elif int(class1) < 70:
+                elif int(class1) < 70 and int(class1) >= 60:
                     newClasses.append("C")
-                elif int(class1) < 60:
+                elif int(class1) < 60 and int(class1) >= 50:
                     newClasses.append("D")
-                elif int(class1) < 50:
+                elif int(class1) < 50 and int(class1) >= 0:
                     newClasses.append("F")
             else:
                 newClasses.append(class1)
@@ -40,10 +49,17 @@ class calculator():
             if i not in convert:
                 print('Error: Invalid Grade')
                 return
-        return (convert[newClasses[0]] + convert[newClasses[1]] + convert[newClasses[2]] + convert[newClasses[3]] + convert[newClasses[4]] + convert[newClasses[5]]) / 6
-    
+        try:
+            return (convert[newClasses[0]] + convert[newClasses[1]] + convert[newClasses[2]] + convert[newClasses[3]] + convert[newClasses[4]] + convert[newClasses[5]]) / 6
+        except IndexError:
+            print('Error: Invalid Grade')
+            exit()
+        
     def print_result(self) -> str:
-        print('\nYour GPA is: ' + str(round(float(self.result), 1)))
+        try:
+            print('\nYour GPA is: ' + str(round(float(self.result), 1)))
+        except TypeError:
+            print('\nError: Invalid Grade')
 
 Calc = calculator()
 Calc.print_result()
